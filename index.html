@@ -1,0 +1,2972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Atlas Ledger</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#1e3a5f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Atlas Ledger">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f6f8;
+  color: #14283f;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.topbar {
+  background: #1e3a5f;
+  color: white;
+  padding: 18px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+#brandLogo {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.brand {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.tagline {
+  font-size: 11px;
+  color: #aeb7c4;
+  margin-top: 3px;
+}
+
+.topbar-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  border: 0;
+  background: #2c4a6e;
+  color: white;
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+}
+
+.icon-btn.danger {
+  background: #5a2a2a;
+}
+
+main {
+  max-width: 720px;
+  margin: auto;
+  padding: 18px 15px 90px;
+}
+
+.section {
+  display: none;
+}
+
+.section.active {
+  display: block;
+}
+
+h1 {
+  margin: 0 0 5px;
+  font-size: 25px;
+}
+
+h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+p {
+  color: #697586;
+  margin: 0 0 18px;
+}
+
+.welcome {
+  margin-bottom: 18px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.stat-card {
+  background: white;
+  padding: 16px;
+  border-radius: 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.05);
+}
+
+.stat-card span,
+.report-grid span {
+  display: block;
+  color: #6b7280;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.stat-card strong {
+  font-size: 21px;
+}
+
+.stat-card.danger strong {
+  color: #d94848;
+}
+
+.profit-card {
+  margin-top: 10px;
+  padding: 18px;
+  border-radius: 14px;
+  background: #14283f;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profit-card span {
+  display: block;
+  font-weight: bold;
+}
+
+.profit-card small {
+  color: #aeb7c4;
+}
+
+.profit-card strong {
+  font-size: 24px;
+}
+
+.late-card {
+  margin-top: 10px;
+  padding: 16px;
+  border-radius: 14px;
+  background: #fff4d6;
+  border: 1px solid #f5dfa0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.late-card .late-icon {
+  color: #946200;
+  flex-shrink: 0;
+}
+
+.late-card strong {
+  display: block;
+  font-size: 15px;
+  color: #17202a;
+}
+
+.late-card span {
+  font-size: 12px;
+  color: #8a6d1f;
+}
+
+.collection-row {
+  background: white;
+  border-radius: 13px;
+  padding: 14px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+
+.days-late {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: #fee2e2;
+  color: #b91c1c;
+  white-space: nowrap;
+  margin-top: 6px;
+}
+
+.low-stock-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: #fff4d6;
+  color: #946200;
+  white-space: nowrap;
+  margin-top: 6px;
+}
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.primary,
+.secondary {
+  border: 0;
+  border-radius: 11px;
+  padding: 13px 15px;
+  font-weight: bold;
+}
+
+.primary {
+  background: #1e3a5f;
+  color: white;
+}
+
+.secondary {
+  background: white;
+  border: 1px solid #d7dce2;
+}
+
+.small {
+  padding: 10px 13px;
+}
+
+.full {
+  width: 100%;
+}
+
+.panel {
+  background: white;
+  border-radius: 14px;
+  padding: 16px;
+  margin-top: 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.04);
+}
+
+.panel-header,
+.page-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.panel-header {
+  margin-bottom: 12px;
+}
+
+.panel-header button {
+  border: 0;
+  background: none;
+  color: #374151;
+  font-weight: bold;
+}
+
+.page-title {
+  margin-bottom: 18px;
+}
+
+.page-title p {
+  margin-bottom: 0;
+}
+
+.search,
+.form input,
+.form select {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #d4d9df;
+  border-radius: 10px;
+  background: white;
+  outline: none;
+}
+
+.search:focus,
+.form input:focus,
+.form select:focus {
+  border-color: #1e3a5f;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form label {
+  font-weight: bold;
+  font-size: 13px;
+  margin-top: 7px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: normal;
+}
+
+.checkbox-label input {
+  width: 17px;
+  height: 17px;
+}
+
+.no-whatsapp-tag {
+  display: inline-block;
+  font-size: 11px;
+  color: #946200;
+  background: #fff4d6;
+  padding: 2px 7px;
+  border-radius: 6px;
+  margin-left: 6px;
+  font-weight: bold;
+}
+
+.money-input {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1px solid #d4d9df;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.money-input span {
+  padding: 0 13px;
+  color: #6b7280;
+  font-weight: bold;
+}
+
+.money-input input {
+  border: 0;
+  border-radius: 0;
+}
+
+.balance-preview {
+  background: #f0f3f6;
+  border-radius: 9px;
+  padding: 12px;
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+.quick-amounts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 4px;
+}
+
+.quick-amounts button {
+  flex: 1 1 auto;
+  min-width: 50px;
+  border: 1px solid #d4d9df;
+  background: white;
+  border-radius: 9px;
+  padding: 10px 8px;
+  font-weight: bold;
+  font-size: 13px;
+  color: #1e3a5f;
+}
+
+.quick-amounts button.clear {
+  color: #b91c1c;
+  border-color: #f3c9c9;
+  background: #fef2f2;
+}
+
+.summary-strip {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: white;
+  border-radius: 12px;
+  margin: 12px 0;
+}
+
+.customer-card,
+.expense-card,
+.owing-row {
+  background: white;
+  border-radius: 13px;
+  padding: 14px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+
+.customer-card {
+  cursor: pointer;
+}
+
+.customer-main {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.customer-info-row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+.avatar.male {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.avatar.female {
+  background: #fce7f3;
+  color: #be185d;
+}
+
+.avatar.unknown {
+  background: #e5e7eb;
+  color: #6b7280;
+}
+
+.avatar.large {
+  width: 56px;
+  height: 56px;
+  font-size: 22px;
+}
+
+.customer-name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.customer-phone,
+.muted {
+  color: #788391;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.balance {
+  font-weight: 800;
+  color: #d94848;
+}
+
+.card-actions {
+  display: flex;
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.card-actions.contact-actions {
+  margin-top: 8px;
+}
+
+.card-actions button {
+  flex: 1;
+  border: 1px solid #d8dde3;
+  background: white;
+  border-radius: 8px;
+  padding: 9px 7px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.card-actions .pay {
+  background: #1e3a5f;
+  color: white;
+}
+
+.card-actions .sold {
+  background: #dcfce7;
+  border-color: #bbf0cf;
+  color: #166534;
+}
+
+.card-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.card-actions .whatsapp {
+  background: #e9f9ef;
+  border-color: #bfe8cd;
+  color: #1a7d3c;
+}
+
+.card-actions .whatsapp-off {
+  background: #f1f2f4;
+  border-color: #dfe2e6;
+  color: #9aa2ac;
+}
+
+.card-actions .thanks {
+  background: #fef9e7;
+  border-color: #fbe6a3;
+  color: #92700c;
+}
+
+.status {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 11px;
+  padding: 4px 7px;
+  border-radius: 6px;
+  background: #eef1f4;
+}
+
+.status.overdue {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.status.pending {
+  background: #fff4d6;
+  color: #946200;
+}
+
+.status.paid {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.report-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.report-grid > div {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.report-grid strong {
+  font-size: 20px;
+}
+
+.report-grid .highlight {
+  grid-column: 1 / -1;
+  background: #14283f;
+  color: white;
+}
+
+.report-grid .highlight span {
+  color: #b7c0cc;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-box {
+  background: #f7f8fa;
+  width: 100%;
+  max-width: 720px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 20px 20px 0 0;
+  padding: 22px 17px 30px;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: 12px;
+  border: 0;
+  background: #e5e7eb;
+  color: #374151;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detail-header {
+  margin-bottom: 18px;
+}
+
+.detail-balance {
+  background: #14283f;
+  color: white;
+  padding: 18px;
+  border-radius: 13px;
+  margin: 12px 0;
+}
+
+.detail-balance strong {
+  display: block;
+  font-size: 27px;
+  margin-top: 5px;
+}
+
+.detail-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.history-item {
+  background: white;
+  padding: 12px;
+  border-radius: 9px;
+  margin: 7px 0;
+}
+
+.empty {
+  text-align: center;
+  padding: 25px 10px;
+  color: #8a94a1;
+}
+
+.category-row {
+  margin: 12px 0;
+}
+
+.category-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.bar {
+  height: 7px;
+  background: #e5e7eb;
+  border-radius: 10px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.bar div {
+  height: 100%;
+  background: #1e3a5f;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 67px;
+  background: white;
+  border-top: 1px solid #e1e5e9;
+  display: flex;
+  justify-content: space-around;
+  z-index: 50;
+}
+
+.bottom-nav button {
+  flex: 1;
+  border: 0;
+  background: white;
+  color: #6b7280;
+  font-size: 11px;
+}
+
+.bottom-nav button span {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3px;
+}
+
+.bottom-nav button.active {
+  color: #1e3a5f;
+  font-weight: bold;
+}
+
+.bottom-nav .sale-nav span {
+  display: inline-flex;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  background: #1e3a5f;
+  color: white;
+  font-size: 22px;
+}
+
+#toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #1e3a5f;
+  color: white;
+  padding: 11px 16px;
+  border-radius: 9px;
+  opacity: 0;
+  pointer-events: none;
+  transition: .25s;
+  z-index: 200;
+  font-size: 13px;
+}
+
+#toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (min-width: 700px) {
+  .bottom-nav {
+    max-width: 720px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 15px 15px 0 0;
+  }
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+  <header class="topbar">
+    <div class="brand-row">
+      <img id="brandLogo" style="display:none">
+      <div>
+        <div class="brand">ATLAS LEDGER</div>
+        <div class="tagline">Simple money tracking for small businesses</div>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" onclick="openBusinessSettings()" title="Business settings"><i class="fa-solid fa-gear" style="font-size:17px"></i></button>
+      <button class="icon-btn" onclick="showSection('salesHistory')" title="Sales history"><i class="fa-solid fa-receipt" style="font-size:16px"></i></button>
+      <button class="icon-btn danger" onclick="resetApp()" title="Reset all data"><i class="fa-solid fa-trash-can" style="font-size:16px"></i></button>
+      <button class="icon-btn" onclick="showSection('reports')"><i class="fa-solid fa-chart-column" style="font-size:19px"></i></button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="section active">
+      <div class="welcome">
+        <h1>Business Dashboard</h1>
+        <p>Know your money. Know your business.</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span>Today's Sales</span>
+          <strong id="todaySales">K0</strong>
+        </div>
+        <div class="stat-card">
+          <span>Collected</span>
+          <strong id="todayCollected">K0</strong>
+        </div>
+        <div class="stat-card danger">
+          <span>Money Owed</span>
+          <strong id="totalOwed">K0</strong>
+        </div>
+        <div class="stat-card">
+          <span>Today's Expenses</span>
+          <strong id="todayExpenses">K0</strong>
+        </div>
+      </div>
+
+      <div class="profit-card">
+        <div>
+          <span>Estimated Profit</span>
+          <small>Collected − Expenses</small>
+        </div>
+        <strong id="estimatedProfit">K0</strong>
+      </div>
+
+      <div class="quick-actions">
+        <button onclick="showSection('sale')" class="primary"><i class="fa-solid fa-plus" style="font-size:12px;margin-right:5px"></i>Add Sale</button>
+        <button onclick="showSection('expenses')" class="secondary"><i class="fa-solid fa-plus" style="font-size:12px;margin-right:5px"></i>Expense</button>
+      </div>
+
+      <div id="lateCustomerCard"></div>
+      <div id="lowStockCard"></div>
+
+      <div class="panel" id="collectionsPanel">
+        <div class="panel-header">
+          <h2>Collections To Do Today</h2>
+        </div>
+        <div id="collectionsList"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Customers Owing</h2>
+          <button onclick="showSection('customers')">View all</button>
+        </div>
+        <div id="owingList"></div>
+      </div>
+    </section>
+
+    <!-- CUSTOMERS -->
+    <section id="customers" class="section">
+      <div class="page-title">
+        <div>
+          <h1>Customers</h1>
+          <p>Track who owes your business.</p>
+        </div>
+        <button class="primary small" onclick="openCustomerForm()"><i class="fa-solid fa-plus" style="font-size:12px;margin-right:5px"></i>Add</button>
+      </div>
+
+      <input
+        id="customerSearch"
+        class="search"
+        placeholder="Search customers..."
+        oninput="renderCustomers()"
+      />
+
+      <div class="summary-strip">
+        <span>Total owed</span>
+        <strong id="customerTotalOwed">K0</strong>
+      </div>
+
+      <div id="customerList"></div>
+    </section>
+
+    <!-- ADD SALE -->
+    <section id="sale" class="section">
+      <div class="page-title">
+        <h1>Add Sale</h1>
+        <p>Record a sale and payment.</p>
+      </div>
+
+      <form id="saleForm" class="form" onsubmit="saveSale(event)">
+        <label>Customer</label>
+        <input id="saleCustomer" list="saleCustomerList" required placeholder="Type customer name" autocomplete="off">
+        <datalist id="saleCustomerList"></datalist>
+
+        <label>Item</label>
+        <select id="saleStockItem" onchange="onSaleStockItemChange()">
+          <option value="">Other / Service (not in stock)</option>
+        </select>
+
+        <div id="saleProductWrap">
+          <label>Description</label>
+          <input id="saleProduct" required placeholder="e.g. Cleaning service">
+        </div>
+
+        <div id="saleQuantityWrap" style="display:none">
+          <label>Quantity</label>
+          <input id="saleQuantity" type="number" min="1" step="1" value="1" oninput="onSaleQuantityChange()">
+          <div id="saleStockNote" class="muted"></div>
+        </div>
+
+        <label>Sale amount</label>
+        <div class="money-input">
+          <span>K</span>
+          <input id="saleAmount" type="number" min="1" step="1" required>
+        </div>
+
+        <label>Amount paid</label>
+        <div class="money-input">
+          <span>K</span>
+          <input id="salePaid" type="number" min="0" step="1" value="0" required>
+        </div>
+
+        <div id="saleBalancePreview" class="balance-preview">
+          Balance: K0
+        </div>
+
+        <label id="dueDateLabel">Due date</label>
+        <input id="saleDueDate" type="date">
+
+        <button class="primary full" type="submit">Save Sale</button>
+      </form>
+    </section>
+
+    <!-- EXPENSES -->
+    <section id="expenses" class="section">
+      <div class="page-title">
+        <div>
+          <h1>Expenses</h1>
+          <p>Keep track of money leaving the business.</p>
+        </div>
+        <button class="primary small" onclick="openExpenseForm()"><i class="fa-solid fa-plus" style="font-size:12px;margin-right:5px"></i>Add</button>
+      </div>
+
+      <div class="summary-strip">
+        <span>This month's expenses</span>
+        <strong id="monthExpenses">K0</strong>
+      </div>
+
+      <input
+        id="expenseSearch"
+        class="search"
+        placeholder="Search expenses..."
+        oninput="renderExpenses()"
+      />
+
+      <div id="expenseList"></div>
+    </section>
+
+    <!-- STOCK -->
+    <section id="stock" class="section">
+      <div class="page-title">
+        <div>
+          <h1>Stock</h1>
+          <p>Keep track of what you have to sell.</p>
+        </div>
+        <button class="primary small" onclick="openStockForm()"><i class="fa-solid fa-plus" style="font-size:12px;margin-right:5px"></i>Add</button>
+      </div>
+
+      <div class="summary-strip">
+        <span>Stock value</span>
+        <strong id="stockTotalValue">K0</strong>
+      </div>
+
+      <div id="stockList"></div>
+    </section>
+
+    <!-- SALES HISTORY -->
+    <section id="salesHistory" class="section">
+      <div class="page-title">
+        <div>
+          <h1>Sales History</h1>
+          <p>Every sale recorded, newest first.</p>
+        </div>
+      </div>
+
+      <input
+        id="salesSearch"
+        class="search"
+        placeholder="Search by customer or item..."
+        oninput="renderSalesHistory()"
+      />
+
+      <div id="salesHistoryList"></div>
+    </section>
+
+    <!-- REPORTS -->
+    <section id="reports" class="section">
+      <div class="page-title">
+        <h1>Reports</h1>
+        <p>Understand how your business is performing.</p>
+      </div>
+
+      <select id="reportPeriod" class="search" onchange="renderReports()">
+        <option value="today">Today</option>
+        <option value="week">This Week</option>
+        <option value="month" selected>This Month</option>
+        <option value="lastmonth">Last Month</option>
+      </select>
+
+      <div class="report-grid">
+        <div>
+          <span>Sales</span>
+          <strong id="reportSales">K0</strong>
+        </div>
+        <div>
+          <span>Collected</span>
+          <strong id="reportCollected">K0</strong>
+        </div>
+        <div>
+          <span>Outstanding</span>
+          <strong id="reportOutstanding">K0</strong>
+        </div>
+        <div>
+          <span>Expenses</span>
+          <strong id="reportExpenses">K0</strong>
+        </div>
+        <div class="highlight">
+          <span>Estimated Profit</span>
+          <strong id="reportProfit">K0</strong>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Customers Owing</h2>
+        <div id="reportOwing"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Expenses by Category</h2>
+        <div id="expenseCategories"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- CUSTOMER MODAL -->
+  <div id="customerModal" class="modal">
+    <div class="modal-box">
+      <button class="close" onclick="closeModal('customerModal')"><i class="fa-solid fa-xmark" style="font-size:17px"></i></button>
+      <h2 id="customerModalTitle">Add Customer</h2>
+
+      <form onsubmit="saveCustomer(event)" class="form">
+        <input type="hidden" id="customerId">
+
+        <label>Name</label>
+        <input id="customerName" required placeholder="Customer name">
+
+        <label>Gender</label>
+        <select id="customerGender">
+          <option value="male">👨 Male</option>
+          <option value="female">👩 Female</option>
+        </select>
+
+        <label>Phone</label>
+        <input id="customerPhone" placeholder="097XXXXXXX">
+
+        <label class="checkbox-label">
+          <input type="checkbox" id="customerOnWhatsApp" checked>
+          On WhatsApp
+        </label>
+
+        <button class="primary full">Save Customer</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- CUSTOMER DETAIL MODAL -->
+  <div id="detailModal" class="modal">
+    <div class="modal-box">
+      <button class="close" onclick="closeModal('detailModal')"><i class="fa-solid fa-xmark" style="font-size:17px"></i></button>
+      <div id="customerDetail"></div>
+    </div>
+  </div>
+
+  <!-- PAYMENT MODAL -->
+  <div id="paymentModal" class="modal">
+    <div class="modal-box">
+      <button class="close" onclick="closeModal('paymentModal')"><i class="fa-solid fa-xmark" style="font-size:17px"></i></button>
+      <h2>Record Payment</h2>
+      <p id="paymentCustomerName"></p>
+
+      <form onsubmit="savePayment(event)" class="form">
+        <input type="hidden" id="paymentSaleId">
+
+        <label>Payment amount</label>
+        <div class="money-input">
+          <span>K</span>
+          <input id="paymentAmount" type="number" min="1" step="1" required>
+        </div>
+
+        <div class="quick-amounts">
+          <button type="button" onclick="addQuickAmount(1)">K1</button>
+          <button type="button" onclick="addQuickAmount(2)">K2</button>
+          <button type="button" onclick="addQuickAmount(5)">K5</button>
+          <button type="button" onclick="addQuickAmount(10)">K10</button>
+          <button type="button" onclick="addQuickAmount(20)">K20</button>
+          <button type="button" onclick="addQuickAmount(50)">K50</button>
+          <button type="button" class="clear" onclick="clearQuickAmount()">Clear</button>
+        </div>
+
+        <button class="primary full">Record Payment</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- EXPENSE MODAL -->
+  <div id="expenseModal" class="modal">
+    <div class="modal-box">
+      <button class="close" onclick="closeModal('expenseModal')"><i class="fa-solid fa-xmark" style="font-size:17px"></i></button>
+      <h2 id="expenseModalTitle">Add Expense</h2>
+
+      <form onsubmit="saveExpense(event)" class="form">
+        <input type="hidden" id="expenseId">
+
+        <label>Description</label>
+        <input id="expenseDescription" required placeholder="e.g. Fuel">
+
+        <label>Category</label>
+        <select id="expenseCategory" required>
+          <option value="Transport">Transport</option>
+          <option value="Airtime/Data">Airtime/Data</option>
+          <option value="Materials">Materials</option>
+          <option value="Rent">Rent</option>
+          <option value="Salaries">Salaries</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <label>Amount</label>
+        <div class="money-input">
+          <span>K</span>
+          <input id="expenseAmount" type="number" min="1" required>
+        </div>
+
+        <label>Date</label>
+        <input id="expenseDate" type="date" required>
+
+        <button class="primary full">Save Expense</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- STOCK MODAL -->
+  <div id="stockModal" class="modal">
+    <div class="modal-box">
+      <button class="close" onclick="closeModal('stockModal')"><i class="fa-solid fa-xmark" style="font-size:17px"></i></button>
+      <h2 id="stockModalTitle">Add Stock Item</h2>
+
+      <form onsubmit="saveStockItem(event)" class="form">
+        <input type="hidden" id="stockId">
+
+        <label>Item name</label>
+        <input id="stockName" required placeholder="e.g. 20L Bucket">
+
+        <label>Quantity</label>
+        <input id="stockQuantity" type="number" min="0" step="1" required placeholder="0">
+
+        <label>Selling price</label>
+        <div class="money-input">
+          <span>K</span>
+          <input id="stockPrice" type="number" min="0" step="1" required>
+        </div>
+
+        <button class="primary full">Save Item</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- BUSINESS SETTINGS MODAL -->
+  <!-- EDIT SALE MODAL -->
+  <div id="editSaleModal" class="modal">
+    <div class="modal-box">
+      <button class="close" onclick="closeModal('editSaleModal')"><i class="fa-solid fa-xmark" style="font-size:17px"></i></button>
+      <h2>Edit Sale</h2>
+      <p id="editSaleSummary" class="muted"></p>
+
+      <form onsubmit="saveEditSale(event)" class="form">
+        <input type="hidden" id="editSaleId">
+
+        <label>Sale amount</label>
+        <div class="money-input">
+          <span>K</span>
+          <input id="editSaleAmount" type="number" min="1" step="1" required>
+        </div>
+
+        <label>Amount paid</label>
+        <div class="money-input">
+          <span>K</span>
+          <input id="editSalePaid" type="number" min="0" step="1" required>
+        </div>
+
+        <label>Due date</label>
+        <input id="editSaleDueDate" type="date">
+
+        <button class="primary full">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="businessSettingsModal" class="modal">
+    <div class="modal-box">
+      <button class="close" onclick="closeModal('businessSettingsModal')"><i class="fa-solid fa-xmark" style="font-size:17px"></i></button>
+      <h2>Business Settings</h2>
+      <p>This appears at the end of messages sent to customers.</p>
+
+      <form onsubmit="saveBusinessSettings(event)" class="form">
+        <label>Business name</label>
+        <input id="businessName" placeholder="e.g. Sparkle Clean Zambia">
+
+        <label>Business phone number</label>
+        <input id="businessPhone" placeholder="097XXXXXXX">
+
+        <label>Business logo (optional)</label>
+        <input id="businessLogo" type="file" accept="image/*" onchange="onLogoSelected(event)">
+        <div id="logoPreviewWrap" style="display:none;margin-top:6px">
+          <img id="logoPreview" style="width:56px;height:56px;border-radius:50%;object-fit:cover">
+          <button type="button" class="secondary small" onclick="clearLogo()" style="margin-top:6px">Remove logo</button>
+        </div>
+
+        <button class="primary full">Save Settings</button>
+      </form>
+
+      <h3 style="margin-top:22px">Backup &amp; Restore</h3>
+      <p>Your data lives only on this device. Export a backup regularly so you never lose it.</p>
+
+      <div class="quick-actions" style="margin-top:0">
+        <button class="secondary" onclick="exportBackup()"><i class="fa-solid fa-download" style="font-size:13px;margin-right:5px"></i>Export Backup</button>
+        <button class="secondary" onclick="document.getElementById('importFile').click()"><i class="fa-solid fa-upload" style="font-size:13px;margin-right:5px"></i>Restore Backup</button>
+      </div>
+      <input type="file" id="importFile" accept="application/json" style="display:none" onchange="importBackup(event)">
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button onclick="showSection('dashboard')" data-nav="dashboard">
+      <span><i class="fa-solid fa-house" style="font-size:19px"></i></span>Home
+    </button>
+    <button onclick="showSection('customers')" data-nav="customers">
+      <span><i class="fa-solid fa-users" style="font-size:18px"></i></span>Customers
+    </button>
+    <button onclick="showSection('stock')" data-nav="stock">
+      <span><i class="fa-solid fa-box" style="font-size:18px"></i></span>Stock
+    </button>
+    <button onclick="showSection('sale')" data-nav="sale" class="sale-nav">
+      <span><i class="fa-solid fa-plus" style="font-size:18px"></i></span>Sale
+    </button>
+    <button onclick="showSection('expenses')" data-nav="expenses">
+      <span><i class="fa-solid fa-money-bill-wave" style="font-size:18px"></i></span>Expenses
+    </button>
+    <button onclick="showSection('reports')" data-nav="reports">
+      <span><i class="fa-solid fa-chart-column" style="font-size:19px"></i></span>Reports
+    </button>
+  </nav>
+
+  <div id="toast"></div>
+</div>
+
+<script>
+const STORAGE_KEY = "atlas_ledger_v1";
+const LOW_STOCK_THRESHOLD = 5;
+
+const ICON_CALL = '<i class="fa-solid fa-phone" style="font-size:12px;margin-right:4px"></i>';
+const ICON_SMS = '<i class="fa-solid fa-comment-sms" style="font-size:13px;margin-right:4px"></i>';
+const ICON_WHATSAPP = '<i class="fa-brands fa-whatsapp" style="font-size:14px;margin-right:4px"></i>';
+const ICON_WARNING = '<i class="fa-solid fa-triangle-exclamation" style="font-size:22px"></i>';
+
+let db = loadDB();
+
+function digitsOnly(phone) {
+  return String(phone || "").replace(/\D/g, "");
+}
+
+function callCustomer(id) {
+  const c = customerById(id);
+  if (!c || !c.phone) {
+    showToast("Customer has no phone number");
+    return;
+  }
+  window.location.href = `tel:${digitsOnly(c.phone)}`;
+}
+
+function smsCustomer(id) {
+  const c = customerById(id);
+  if (!c || !c.phone) {
+    showToast("Customer has no phone number");
+    return;
+  }
+  const balance = customerBalance(id);
+  const message = (balance > 0
+    ? `Hi ${c.name}, this is a reminder that your outstanding balance is ${money(balance)}.`
+    : `Hi ${c.name}, just checking in with you. Thanks for being a valued customer!`) + signatureLine();
+  window.location.href = `smsto:${digitsOnly(c.phone)}?body=${encodeURIComponent(message)}`;
+}
+
+function signatureLine() {
+  const info = db.businessInfo || {};
+  const parts = [];
+
+  if (info.name) parts.push(info.name);
+  if (info.phone) parts.push(info.phone);
+
+  return parts.length ? `\n\n- ${parts.join(", ")}` : "";
+}
+
+function openBusinessSettings() {
+  const info = db.businessInfo || {};
+  document.getElementById("businessName").value = info.name || "";
+  document.getElementById("businessPhone").value = info.phone || "";
+
+  const logoWrap = document.getElementById("logoPreviewWrap");
+  if (info.logo) {
+    document.getElementById("logoPreview").src = info.logo;
+    logoWrap.style.display = "block";
+  } else {
+    logoWrap.style.display = "none";
+  }
+
+  document.getElementById("businessSettingsModal").classList.add("show");
+}
+
+function onLogoSelected(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    const img = new Image();
+    img.onload = () => {
+      const size = 120;
+      const canvas = document.createElement("canvas");
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext("2d");
+      const scale = Math.max(size / img.width, size / img.height);
+      const w = img.width * scale;
+      const h = img.height * scale;
+      ctx.drawImage(img, (size - w) / 2, (size - h) / 2, w, h);
+
+      const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
+      document.getElementById("logoPreview").src = dataUrl;
+      document.getElementById("logoPreviewWrap").style.display = "block";
+      document.getElementById("logoPreviewWrap").dataset.pending = dataUrl;
+    };
+    img.src = reader.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearLogo() {
+  document.getElementById("logoPreviewWrap").style.display = "none";
+  document.getElementById("logoPreviewWrap").dataset.pending = "REMOVE";
+  document.getElementById("businessLogo").value = "";
+}
+
+function saveBusinessSettings(e) {
+  e.preventDefault();
+
+  const pending = document.getElementById("logoPreviewWrap").dataset.pending;
+  let logo = (db.businessInfo && db.businessInfo.logo) || "";
+
+  if (pending === "REMOVE") {
+    logo = "";
+  } else if (pending) {
+    logo = pending;
+  }
+
+  db.businessInfo = {
+    name: document.getElementById("businessName").value.trim(),
+    phone: document.getElementById("businessPhone").value.trim(),
+    logo
+  };
+
+  delete document.getElementById("logoPreviewWrap").dataset.pending;
+
+  saveDB();
+  closeModal("businessSettingsModal");
+  renderBrandLogo();
+  showToast("Business settings saved");
+}
+
+function renderBrandLogo() {
+  const logo = db.businessInfo && db.businessInfo.logo;
+  const el = document.getElementById("brandLogo");
+  if (!el) return;
+
+  if (logo) {
+    el.src = logo;
+    el.style.display = "block";
+  } else {
+    el.style.display = "none";
+  }
+}
+
+function exportBackup() {
+  const blob = new Blob([JSON.stringify(db, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `atlas-ledger-backup-${today()}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast("Backup downloaded");
+}
+
+function importBackup(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    let parsed;
+    try {
+      parsed = JSON.parse(reader.result);
+    } catch (e) {
+      showToast("That file doesn't look like a valid backup");
+      return;
+    }
+
+    const confirmed = window.confirm(
+      "This will replace ALL current data with the contents of this backup. Continue?"
+    );
+    if (!confirmed) return;
+
+    db = {
+      customers: parsed.customers || [],
+      sales: parsed.sales || [],
+      payments: parsed.payments || [],
+      expenses: parsed.expenses || [],
+      stock: parsed.stock || [],
+      businessInfo: parsed.businessInfo || { name: "", phone: "", logo: "" }
+    };
+
+    saveDB();
+    populateCustomerSelect();
+    populateSaleStockSelect();
+    renderDashboard();
+    renderCustomers();
+    renderExpenses();
+    renderStock();
+    renderReports();
+    renderBrandLogo();
+
+    showSection("dashboard");
+    showToast("Backup restored");
+  };
+  reader.readAsText(file);
+  event.target.value = "";
+}
+
+function loadDB() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (!parsed.stock) parsed.stock = [];
+      if (!parsed.businessInfo) parsed.businessInfo = { name: "", phone: "", logo: "" };
+      if (parsed.businessInfo.logo === undefined) parsed.businessInfo.logo = "";
+      return parsed;
+    }
+  } catch (e) {}
+
+  return {
+    customers: [],
+    sales: [],
+    payments: [],
+    expenses: [],
+    stock: [],
+    businessInfo: { name: "", phone: "", logo: "" }
+  };
+}
+
+function saveDB() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+  } catch (e) {
+    showToast("Storage unavailable in this browser");
+  }
+}
+
+function resetApp() {
+  const confirmed = window.confirm(
+    "This will permanently delete ALL customers, sales, expenses, payments, and stock. This cannot be undone. Continue?"
+  );
+
+  if (!confirmed) return;
+
+  const doubleCheck = window.confirm(
+    "Are you absolutely sure? All data will be lost."
+  );
+
+  if (!doubleCheck) return;
+
+  db = {
+    customers: [],
+    sales: [],
+    payments: [],
+    expenses: [],
+    stock: []
+  };
+
+  saveDB();
+
+  populateCustomerSelect();
+  populateSaleStockSelect();
+  renderDashboard();
+  renderCustomers();
+  renderExpenses();
+  renderStock();
+  renderReports();
+
+  showSection("dashboard");
+  showToast("All data has been reset");
+}
+
+function money(value) {
+  return "K" + Number(value || 0).toLocaleString("en-US");
+}
+
+function today() {
+  return new Date().toISOString().split("T")[0];
+}
+
+function customerById(id) {
+  return db.customers.find(c => c.id === id);
+}
+
+function salePaid(saleId) {
+  const sale = db.sales.find(s => s.id === saleId);
+  if (!sale) return 0;
+
+  return db.payments
+    .filter(p => p.saleId === saleId)
+    .reduce((sum, p) => sum + Number(p.amount), Number(sale.amountPaid || 0));
+}
+
+function saleBalance(sale) {
+  return Math.max(0, Number(sale.amount) - salePaid(sale.id));
+}
+
+function customerBalance(customerId) {
+  return db.sales
+    .filter(s => s.customerId === customerId)
+    .reduce((sum, s) => sum + saleBalance(s), 0);
+}
+
+function saleStatus(sale) {
+  const balance = saleBalance(sale);
+
+  if (balance <= 0) return "paid";
+
+  if (sale.dueDate && today() > sale.dueDate) {
+    return "overdue";
+  }
+
+  return "pending";
+}
+
+function daysOverdue(sale) {
+  if (!sale.dueDate) return 0;
+
+  const due = new Date(sale.dueDate);
+  const now = new Date(today());
+  const diff = Math.round((now - due) / 86400000);
+
+  return Math.max(0, diff);
+}
+
+function customerLateStats(customerId) {
+  const sales = db.sales.filter(s => s.customerId === customerId);
+
+  const overdueCount = sales.filter(s => saleStatus(s) === "overdue").length;
+  const paidLateCount = sales.filter(s => s.paidLate).length;
+  const maxDaysLate = Math.max(
+    0,
+    ...sales.filter(s => saleStatus(s) === "overdue").map(daysOverdue)
+  );
+
+  return {
+    delayCount: overdueCount + paidLateCount,
+    maxDaysLate
+  };
+}
+
+function showSection(id) {
+  document.querySelectorAll(".section").forEach(s => {
+    s.classList.remove("active");
+  });
+
+  document.getElementById(id).classList.add("active");
+
+  document.querySelectorAll(".bottom-nav button").forEach(b => {
+    b.classList.toggle("active", b.dataset.nav === id);
+  });
+
+  if (id === "dashboard") renderDashboard();
+  if (id === "customers") renderCustomers();
+  if (id === "sale") { populateCustomerSelect(); populateSaleStockSelect(); }
+  if (id === "expenses") renderExpenses();
+  if (id === "stock") renderStock();
+  if (id === "salesHistory") renderSalesHistory();
+  if (id === "reports") renderReports();
+
+  window.scrollTo(0, 0);
+}
+
+function renderDashboard() {
+  const t = today();
+
+  const todaysSales = db.sales
+    .filter(s => s.date === t)
+    .reduce((sum, s) => sum + Number(s.amount), 0);
+
+  const todaysCollected =
+    db.sales
+      .filter(s => s.date === t)
+      .reduce((sum, s) => sum + Number(s.amountPaid || 0), 0) +
+    db.payments
+      .filter(p => p.date === t)
+      .reduce((sum, p) => sum + Number(p.amount), 0);
+
+  const todaysExpenses = db.expenses
+    .filter(e => e.date === t)
+    .reduce((sum, e) => sum + Number(e.amount), 0);
+
+  const owed = db.customers
+    .reduce((sum, c) => sum + customerBalance(c.id), 0);
+
+  document.getElementById("todaySales").textContent = money(todaysSales);
+  document.getElementById("todayCollected").textContent = money(todaysCollected);
+  document.getElementById("todayExpenses").textContent = money(todaysExpenses);
+  document.getElementById("totalOwed").textContent = money(owed);
+
+  const profit = todaysCollected - todaysExpenses;
+  document.getElementById("estimatedProfit").textContent = money(profit);
+
+  renderLateCustomerCard();
+  renderLowStockCard();
+  renderCollections();
+
+  const owing = db.customers
+    .map(c => ({ customer: c, balance: customerBalance(c.id) }))
+    .filter(x => x.balance > 0)
+    .sort((a, b) => b.balance - a.balance)
+    .slice(0, 5);
+
+  const container = document.getElementById("owingList");
+
+  if (!owing.length) {
+    container.innerHTML = `<div class="empty">No customers owe you right now.</div>`;
+    return;
+  }
+
+  container.innerHTML = owing.map(x => `
+    <div class="owing-row" onclick="openCustomerDetail('${x.customer.id}')">
+      <div class="customer-main">
+        <div class="customer-info-row">
+          ${avatarHTML(x.customer)}
+          <div>
+            <div class="customer-name">${escapeHTML(x.customer.name)}</div>
+            <div class="customer-phone">${escapeHTML(x.customer.phone || "")}</div>
+          </div>
+        </div>
+        <div class="balance">${money(x.balance)}</div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderCollections() {
+  const overdueSales = db.sales.filter(s => saleStatus(s) === "overdue");
+
+  const byCustomer = {};
+
+  overdueSales.forEach(s => {
+    const days = daysOverdue(s);
+    if (!byCustomer[s.customerId]) {
+      byCustomer[s.customerId] = { balance: 0, maxDays: 0 };
+    }
+    byCustomer[s.customerId].balance += saleBalance(s);
+    byCustomer[s.customerId].maxDays = Math.max(byCustomer[s.customerId].maxDays, days);
+  });
+
+  const rows = Object.entries(byCustomer)
+    .map(([customerId, data]) => ({ customer: customerById(customerId), ...data }))
+    .filter(x => x.customer)
+    .sort((a, b) => b.maxDays - a.maxDays);
+
+  const container = document.getElementById("collectionsList");
+
+  if (!rows.length) {
+    container.innerHTML = `<div class="empty">Nothing overdue — you're all caught up.</div>`;
+    return;
+  }
+
+  container.innerHTML = rows.map(x => `
+    <div class="collection-row">
+      <div class="customer-main">
+        <div class="customer-info-row">
+          ${avatarHTML(x.customer)}
+          <div>
+            <div class="customer-name">${escapeHTML(x.customer.name)}</div>
+            <div class="muted">Owes ${money(x.balance)}</div>
+          </div>
+        </div>
+        <span class="days-late">${x.maxDays} day${x.maxDays === 1 ? "" : "s"} late</span>
+      </div>
+      <div class="card-actions contact-actions">
+        <button onclick="callCustomer('${x.customer.id}')">${ICON_CALL} Call</button>
+        <button onclick="smsCustomer('${x.customer.id}')">${ICON_SMS} SMS</button>
+        <button class="${x.customer.onWhatsApp === false ? 'whatsapp-off' : 'whatsapp'}" onclick="sendReminder('${x.customer.id}')">${ICON_WHATSAPP} WhatsApp</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderLowStockCard() {
+  const lowItems = db.stock
+    .filter(s => s.quantity <= LOW_STOCK_THRESHOLD)
+    .sort((a, b) => a.quantity - b.quantity);
+
+  const container = document.getElementById("lowStockCard");
+
+  if (!lowItems.length) {
+    container.innerHTML = "";
+    return;
+  }
+
+  const names = lowItems.slice(0, 3).map(s => `${escapeHTML(s.name)} (${s.quantity})`).join(", ");
+  const more = lowItems.length > 3 ? ` +${lowItems.length - 3} more` : "";
+
+  container.innerHTML = `
+    <div class="late-card">
+      <span class="late-icon"><i class="fa-solid fa-box-open" style="font-size:22px"></i></span>
+      <div>
+        <strong>${lowItems.length} item${lowItems.length === 1 ? "" : "s"} running low</strong>
+        <span>${names}${more}</span>
+      </div>
+    </div>
+  `;
+}
+
+function renderLateCustomerCard() {
+  const stats = db.customers
+    .map(c => ({ customer: c, ...customerLateStats(c.id) }))
+    .filter(x => x.delayCount > 0)
+    .sort((a, b) => b.delayCount - a.delayCount || b.maxDaysLate - a.maxDaysLate);
+
+  const container = document.getElementById("lateCustomerCard");
+
+  if (!stats.length) {
+    container.innerHTML = "";
+    return;
+  }
+
+  const top = stats[0];
+
+  container.innerHTML = `
+    <div class="late-card">
+      <span class="late-icon">${ICON_WARNING}</span>
+      <div>
+        <strong>${escapeHTML(top.customer.name)} is your most delayed payer</strong>
+        <span>${top.delayCount} late payment${top.delayCount === 1 ? "" : "s"}${top.maxDaysLate > 0 ? ` • currently ${top.maxDaysLate} days overdue` : ""}</span>
+      </div>
+    </div>
+  `;
+}
+
+function renderCustomers() {
+  const search = (document.getElementById("customerSearch")?.value || "")
+    .toLowerCase()
+    .trim();
+
+  const total = db.customers.reduce(
+    (sum, c) => sum + customerBalance(c.id), 0
+  );
+
+  document.getElementById("customerTotalOwed").textContent = money(total);
+
+  const customers = db.customers
+    .filter(c =>
+      c.name.toLowerCase().includes(search) ||
+      (c.phone || "").toLowerCase().includes(search)
+    )
+    .map(c => ({ c, balance: customerBalance(c.id), late: customerLateStats(c.id) }))
+    .sort((a, b) =>
+      b.late.maxDaysLate - a.late.maxDaysLate ||
+      b.balance - a.balance
+    )
+    .map(x => x.c);
+
+  const container = document.getElementById("customerList");
+
+  if (!customers.length) {
+    container.innerHTML = `
+      <div class="empty">
+        ${db.customers.length ? "No matching customers." : "No customers yet. Add your first customer."}
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = customers.map(c => {
+    const balance = customerBalance(c.id);
+    const lateStats = customerLateStats(c.id);
+
+    return `
+      <div class="customer-card">
+        <div onclick="openCustomerDetail('${c.id}')">
+          <div class="customer-main">
+            <div class="customer-info-row">
+              ${avatarHTML(c)}
+              <div>
+                <div class="customer-name">${escapeHTML(c.name)}${c.onWhatsApp === false ? `<span class="no-whatsapp-tag">No WhatsApp</span>` : ""}</div>
+                <div class="customer-phone">${escapeHTML(c.phone || "No phone number")}</div>
+              </div>
+            </div>
+            <div>
+              <div class="balance">${money(balance)}</div>
+              ${lateStats.maxDaysLate > 0
+                ? `<span class="days-late">${lateStats.maxDaysLate} day${lateStats.maxDaysLate === 1 ? "" : "s"} late</span>`
+                : ""}
+            </div>
+          </div>
+        </div>
+
+        <div class="card-actions">
+          <button onclick="openCustomerDetail('${c.id}')"><i class="fa-solid fa-eye" style="font-size:11px;margin-right:4px"></i>Details</button>
+          ${balance > 0
+            ? `<button class="pay" onclick="openPaymentForCustomer('${c.id}')"><i class="fa-solid fa-hand-holding-dollar" style="font-size:12px;margin-right:4px"></i>Record Payment</button>`
+            : ""}
+        </div>
+        <div class="card-actions contact-actions">
+          <button onclick="callCustomer('${c.id}')">${ICON_CALL} Call</button>
+          <button onclick="smsCustomer('${c.id}')">${ICON_SMS} SMS</button>
+          <button class="${c.onWhatsApp === false ? 'whatsapp-off' : 'whatsapp'}" onclick="sendReminder('${c.id}')">${ICON_WHATSAPP} WhatsApp</button>
+        </div>
+        <div class="card-actions contact-actions">
+          <button class="thanks" onclick="sendThankYou('${c.id}')">🙏 Thank Customer</button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function openCustomerForm(id = "") {
+  document.getElementById("customerId").value = id;
+
+  if (id) {
+    const c = customerById(id);
+
+    document.getElementById("customerModalTitle").textContent = "Edit Customer";
+    document.getElementById("customerName").value = c.name;
+    document.getElementById("customerGender").value = c.gender || "male";
+    document.getElementById("customerPhone").value = c.phone || "";
+    document.getElementById("customerOnWhatsApp").checked = c.onWhatsApp !== false;
+  } else {
+    document.getElementById("customerModalTitle").textContent = "Add Customer";
+    document.getElementById("customerName").value = "";
+    document.getElementById("customerGender").value = "male";
+    document.getElementById("customerPhone").value = "";
+    document.getElementById("customerOnWhatsApp").checked = true;
+  }
+
+  document.getElementById("customerModal").classList.add("show");
+}
+
+function avatarHTML(customer, large) {
+  const gender = customer && customer.gender;
+  const cls = gender === "male" ? "male" : gender === "female" ? "female" : "unknown";
+  const emoji = gender === "male"
+    ? "👨"
+    : gender === "female"
+      ? "👩"
+      : "🧑";
+
+  return `<div class="avatar ${cls}${large ? " large" : ""}">${emoji}</div>`;
+}
+
+function saveCustomer(e) {
+  e.preventDefault();
+
+  const id = document.getElementById("customerId").value;
+  const name = document.getElementById("customerName").value.trim();
+  const gender = document.getElementById("customerGender").value;
+  const phone = document.getElementById("customerPhone").value.trim();
+
+  if (!name) return;
+
+  const onWhatsApp = document.getElementById("customerOnWhatsApp").checked;
+
+  if (id) {
+    const c = customerById(id);
+    c.name = name;
+    c.gender = gender;
+    c.phone = phone;
+    c.onWhatsApp = onWhatsApp;
+  } else {
+    db.customers.push({
+      id: crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(),
+      name,
+      gender,
+      phone,
+      onWhatsApp,
+      createdAt: new Date().toISOString()
+    });
+  }
+
+  saveDB();
+  closeModal("customerModal");
+  renderCustomers();
+  renderDashboard();
+  populateCustomerSelect();
+
+  showToast("Customer saved");
+}
+
+function populateCustomerSelect() {
+  const list = document.getElementById("saleCustomerList");
+
+  list.innerHTML = db.customers
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map(c => `<option value="${escapeHTML(c.name)}">`)
+    .join("");
+}
+
+function populateSaleStockSelect() {
+  const select = document.getElementById("saleStockItem");
+  const currentValue = select.value;
+
+  select.innerHTML =
+    `<option value="">Other / Service (not in stock)</option>` +
+    [...db.stock]
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map(s => `<option value="${s.id}" ${s.quantity <= 0 ? "disabled" : ""}>${escapeHTML(s.name)} — ${money(s.price)} (${s.quantity} left)</option>`)
+      .join("");
+
+  if ([...select.options].some(o => o.value === currentValue)) {
+    select.value = currentValue;
+  }
+}
+
+function onSaleStockItemChange() {
+  const stockId = document.getElementById("saleStockItem").value;
+  const productWrap = document.getElementById("saleProductWrap");
+  const quantityWrap = document.getElementById("saleQuantityWrap");
+  const productInput = document.getElementById("saleProduct");
+
+  if (!stockId) {
+    productWrap.style.display = "";
+    quantityWrap.style.display = "none";
+    productInput.required = true;
+    productInput.value = "";
+    return;
+  }
+
+  const item = stockById(stockId);
+
+  productWrap.style.display = "none";
+  quantityWrap.style.display = "";
+  productInput.required = false;
+  productInput.value = item.name;
+
+  document.getElementById("saleQuantity").value = 1;
+  document.getElementById("saleQuantity").max = item.quantity;
+
+  updateSaleAmountFromStock();
+}
+
+function onSaleQuantityChange() {
+  updateSaleAmountFromStock();
+}
+
+function updateSaleAmountFromStock() {
+  const stockId = document.getElementById("saleStockItem").value;
+  if (!stockId) return;
+
+  const item = stockById(stockId);
+  const quantity = Number(document.getElementById("saleQuantity").value || 0);
+
+  document.getElementById("saleAmount").value = item.price * quantity;
+
+  const note = document.getElementById("saleStockNote");
+  note.textContent = quantity > item.quantity
+    ? `Only ${item.quantity} in stock`
+    : `${item.quantity} in stock`;
+  note.style.color = quantity > item.quantity ? "#b91c1c" : "";
+
+  updateSaleBalance();
+}
+
+function findOrCreateCustomerByName(name) {
+  const existing = db.customers.find(
+    c => c.name.trim().toLowerCase() === name.trim().toLowerCase()
+  );
+
+  if (existing) return existing;
+
+  const newCustomer = {
+    id: crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(),
+    name: name.trim(),
+    phone: "",
+    createdAt: new Date().toISOString()
+  };
+
+  db.customers.push(newCustomer);
+  return newCustomer;
+}
+
+function saveSale(e) {
+  e.preventDefault();
+
+  const customerName = document.getElementById("saleCustomer").value.trim();
+  const stockId = document.getElementById("saleStockItem").value;
+  const amount = Number(document.getElementById("saleAmount").value);
+  const paid = Number(document.getElementById("salePaid").value || 0);
+  const dueDate = document.getElementById("saleDueDate").value;
+
+  let product = document.getElementById("saleProduct").value.trim();
+  let quantity = 1;
+  let stockItem = null;
+
+  if (stockId) {
+    stockItem = stockById(stockId);
+
+    if (!stockItem) {
+      showToast("Selected stock item no longer exists");
+      return;
+    }
+
+    quantity = Number(document.getElementById("saleQuantity").value || 0);
+    product = stockItem.name;
+
+    if (quantity <= 0) {
+      showToast("Enter a valid quantity");
+      return;
+    }
+
+    if (quantity > stockItem.quantity) {
+      showToast(`Only ${stockItem.quantity} of ${stockItem.name} in stock`);
+      return;
+    }
+  }
+
+  if (!customerName || !product || amount <= 0) {
+    showToast("Please complete the sale");
+    return;
+  }
+
+  const customer = findOrCreateCustomerByName(customerName);
+  const customerId = customer.id;
+
+  if (paid < 0 || paid > amount) {
+    showToast("Payment cannot exceed sale amount");
+    return;
+  }
+
+  const balance = amount - paid;
+
+  if (balance > 0 && !dueDate) {
+    showToast("Enter a due date for unpaid sales");
+    return;
+  }
+
+  const saleId =
+    crypto.randomUUID ? crypto.randomUUID() : Date.now().toString();
+
+  db.sales.push({
+    id: saleId,
+    customerId,
+    product,
+    amount,
+    amountPaid: paid,
+    dueDate: balance > 0 ? dueDate : null,
+    date: today(),
+    createdAt: new Date().toISOString(),
+    stockItemId: stockId || null,
+    quantity: stockId ? quantity : null
+  });
+
+  if (stockItem) {
+    stockItem.quantity -= quantity;
+  }
+
+  saveDB();
+
+  document.getElementById("saleForm").reset();
+  document.getElementById("salePaid").value = 0;
+  onSaleStockItemChange();
+
+  showToast("Sale saved");
+  populateCustomerSelect();
+  populateSaleStockSelect();
+  renderDashboard();
+  showSection("dashboard");
+}
+
+function updateSaleBalance() {
+  const amount = Number(document.getElementById("saleAmount").value || 0);
+  const paid = Number(document.getElementById("salePaid").value || 0);
+
+  const balance = Math.max(0, amount - paid);
+
+  document.getElementById("saleBalancePreview").textContent =
+    "Balance: " + money(balance);
+
+  document.getElementById("saleDueDate").required = balance > 0;
+  document.getElementById("dueDateLabel").textContent =
+    balance > 0 ? "Due date *" : "Due date";
+}
+
+document.getElementById("saleAmount").addEventListener(
+  "input",
+  updateSaleBalance
+);
+
+document.getElementById("salePaid").addEventListener(
+  "input",
+  updateSaleBalance
+);
+
+function openPaymentForCustomer(customerId) {
+  const sale = db.sales
+    .filter(s => s.customerId === customerId && saleBalance(s) > 0)
+    .sort((a, b) => b.date.localeCompare(a.date))[0];
+
+  if (!sale) {
+    showToast("No outstanding sale");
+    return;
+  }
+
+  const customer = customerById(customerId);
+
+  document.getElementById("paymentSaleId").value = sale.id;
+  document.getElementById("paymentCustomerName").textContent =
+    `${customer.name} owes ${money(saleBalance(sale))}`;
+
+  document.getElementById("paymentAmount").value = "";
+
+  document.getElementById("paymentModal").classList.add("show");
+}
+
+function addQuickAmount(value) {
+  const input = document.getElementById("paymentAmount");
+  const sale = db.sales.find(s => s.id === document.getElementById("paymentSaleId").value);
+  const balance = sale ? saleBalance(sale) : Infinity;
+
+  const current = Number(input.value || 0);
+  const next = Math.min(current + value, balance);
+
+  input.value = next;
+
+  if (current + value > balance) {
+    showToast(`Capped at balance of ${money(balance)}`);
+  }
+}
+
+function clearQuickAmount() {
+  document.getElementById("paymentAmount").value = "";
+}
+
+function savePayment(e) {
+  e.preventDefault();
+
+  const saleId = document.getElementById("paymentSaleId").value;
+  const amount = Number(document.getElementById("paymentAmount").value);
+
+  const sale = db.sales.find(s => s.id === saleId);
+
+  if (!sale || amount <= 0) {
+    showToast("Enter a valid payment");
+    return;
+  }
+
+  const balance = saleBalance(sale);
+
+  if (amount > balance) {
+    showToast("Payment is greater than balance");
+    return;
+  }
+
+  const wasOverdue = saleStatus(sale) === "overdue";
+
+  db.payments.push({
+    id: crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(),
+    saleId,
+    amount,
+    date: today(),
+    createdAt: new Date().toISOString()
+  });
+
+  if (wasOverdue && saleBalance(sale) <= 0) {
+    sale.paidLate = true;
+  }
+
+  saveDB();
+  closeModal("paymentModal");
+
+  showToast("Payment recorded");
+  renderDashboard();
+  renderCustomers();
+
+  if (saleBalance(sale) <= 0) {
+    const customer = customerById(sale.customerId);
+    if (customer && customer.phone) {
+      const shouldThank = window.confirm(
+        `${customer.name} is now fully paid up. Send them a thank-you message?`
+      );
+      if (shouldThank) {
+        sendThankYou(customer.id);
+      }
+    }
+  }
+}
+
+function openExpenseForm(id = "") {
+  document.getElementById("expenseId").value = id;
+
+  if (id) {
+    const expense = db.expenses.find(e => e.id === id);
+    document.getElementById("expenseModalTitle").textContent = "Edit Expense";
+    document.getElementById("expenseDescription").value = expense.description;
+    document.getElementById("expenseCategory").value = expense.category;
+    document.getElementById("expenseAmount").value = expense.amount;
+    document.getElementById("expenseDate").value = expense.date;
+  } else {
+    document.getElementById("expenseModalTitle").textContent = "Add Expense";
+    document.getElementById("expenseDescription").value = "";
+    document.getElementById("expenseAmount").value = "";
+    document.getElementById("expenseDate").value = today();
+  }
+
+  document.getElementById("expenseModal").classList.add("show");
+}
+
+function saveExpense(e) {
+  e.preventDefault();
+
+  const id = document.getElementById("expenseId").value;
+
+  const description =
+    document.getElementById("expenseDescription").value.trim();
+
+  const category =
+    document.getElementById("expenseCategory").value;
+
+  const amount =
+    Number(document.getElementById("expenseAmount").value);
+
+  const date =
+    document.getElementById("expenseDate").value;
+
+  if (!description || amount <= 0 || !date) {
+    showToast("Complete the expense");
+    return;
+  }
+
+  if (id) {
+    const expense = db.expenses.find(ex => ex.id === id);
+    expense.description = description;
+    expense.category = category;
+    expense.amount = amount;
+    expense.date = date;
+  } else {
+    db.expenses.push({
+      id: crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(),
+      description,
+      category,
+      amount,
+      date,
+      createdAt: new Date().toISOString()
+    });
+  }
+
+  saveDB();
+  closeModal("expenseModal");
+
+  showToast("Expense saved");
+  renderExpenses();
+  renderDashboard();
+  renderReports();
+}
+
+function deleteExpense(id) {
+  const confirmed = window.confirm("Delete this expense?");
+  if (!confirmed) return;
+
+  db.expenses = db.expenses.filter(e => e.id !== id);
+  saveDB();
+
+  showToast("Expense deleted");
+  renderExpenses();
+  renderDashboard();
+  renderReports();
+}
+
+function renderExpenses() {
+  const now = new Date();
+  const month = now.getMonth();
+  const year = now.getFullYear();
+
+  const monthTotal = db.expenses
+    .filter(e => {
+      const d = new Date(e.date);
+      return d.getMonth() === month && d.getFullYear() === year;
+    })
+    .reduce((sum, e) => sum + Number(e.amount), 0);
+
+  document.getElementById("monthExpenses").textContent = money(monthTotal);
+
+  const search = (document.getElementById("expenseSearch")?.value || "")
+    .toLowerCase()
+    .trim();
+
+  const expenses = [...db.expenses]
+    .filter(e =>
+      e.description.toLowerCase().includes(search) ||
+      e.category.toLowerCase().includes(search)
+    )
+    .sort((a, b) => b.date.localeCompare(a.date));
+
+  const container = document.getElementById("expenseList");
+
+  if (!expenses.length) {
+    container.innerHTML =
+      `<div class="empty">${db.expenses.length ? "No matching expenses." : "No expenses recorded yet."}</div>`;
+    return;
+  }
+
+  container.innerHTML = expenses.map(e => `
+    <div class="expense-card">
+      <div class="customer-main">
+        <div>
+          <div class="customer-name">${escapeHTML(e.description)}</div>
+          <div class="muted">${escapeHTML(e.category)} • ${e.date}</div>
+        </div>
+        <strong>${money(e.amount)}</strong>
+      </div>
+      <div class="card-actions">
+        <button onclick="openExpenseForm('${e.id}')"><i class="fa-solid fa-pen" style="font-size:11px;margin-right:4px"></i>Edit</button>
+        <button onclick="deleteExpense('${e.id}')"><i class="fa-solid fa-trash" style="font-size:11px;margin-right:4px"></i>Delete</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function stockById(id) {
+  return db.stock.find(s => s.id === id);
+}
+
+function openStockForm(id = "") {
+  document.getElementById("stockId").value = id;
+
+  if (id) {
+    const item = stockById(id);
+
+    document.getElementById("stockModalTitle").textContent = "Edit Stock Item";
+    document.getElementById("stockName").value = item.name;
+    document.getElementById("stockQuantity").value = item.quantity;
+    document.getElementById("stockPrice").value = item.price;
+  } else {
+    document.getElementById("stockModalTitle").textContent = "Add Stock Item";
+    document.getElementById("stockName").value = "";
+    document.getElementById("stockQuantity").value = "";
+    document.getElementById("stockPrice").value = "";
+  }
+
+  document.getElementById("stockModal").classList.add("show");
+}
+
+function saveStockItem(e) {
+  e.preventDefault();
+
+  const id = document.getElementById("stockId").value;
+  const name = document.getElementById("stockName").value.trim();
+  const quantity = Number(document.getElementById("stockQuantity").value);
+  const price = Number(document.getElementById("stockPrice").value);
+
+  if (!name || quantity < 0 || price < 0) {
+    showToast("Complete the stock item");
+    return;
+  }
+
+  if (id) {
+    const item = stockById(id);
+    item.name = name;
+    item.quantity = quantity;
+    item.price = price;
+  } else {
+    db.stock.push({
+      id: crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(),
+      name,
+      quantity,
+      price,
+      createdAt: new Date().toISOString()
+    });
+  }
+
+  saveDB();
+  closeModal("stockModal");
+
+  showToast("Stock item saved");
+  renderStock();
+  populateSaleStockSelect();
+}
+
+function markStockSold(id) {
+  const item = stockById(id);
+
+  if (!item) return;
+
+  if (item.quantity <= 0) {
+    showToast(`No more ${item.name} in stock`);
+    return;
+  }
+
+  item.quantity -= 1;
+  saveDB();
+
+  showToast(`${item.name} has been sold`);
+  renderStock();
+  populateSaleStockSelect();
+}
+
+function deleteStockItem(id) {
+  db.stock = db.stock.filter(s => s.id !== id);
+  saveDB();
+  showToast("Stock item removed");
+  renderStock();
+  populateSaleStockSelect();
+}
+
+function renderStock() {
+  const totalValue = db.stock
+    .reduce((sum, s) => sum + Number(s.quantity) * Number(s.price), 0);
+
+  document.getElementById("stockTotalValue").textContent = money(totalValue);
+
+  const items = [...db.stock]
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  const container = document.getElementById("stockList");
+
+  if (!items.length) {
+    container.innerHTML =
+      `<div class="empty">No stock items yet. Add your first item.</div>`;
+    return;
+  }
+
+  container.innerHTML = items.map((s, i) => `
+    <div class="expense-card">
+      <div class="customer-main">
+        <div>
+          <div class="customer-name">${i + 1}. ${escapeHTML(s.name)}</div>
+          <div class="muted">${s.quantity} in stock • ${money(s.price)} each</div>
+          ${s.quantity <= 0
+            ? `<span class="days-late">Out of stock</span>`
+            : s.quantity <= LOW_STOCK_THRESHOLD
+              ? `<span class="low-stock-tag">Low stock</span>`
+              : ""}
+        </div>
+        <strong>${money(s.quantity * s.price)}</strong>
+      </div>
+      <div class="card-actions">
+        <button class="sold" onclick="markStockSold('${s.id}')" ${s.quantity <= 0 ? "disabled" : ""}><i class="fa-solid fa-check" style="font-size:11px;margin-right:4px"></i>Sold</button>
+        <button onclick="openStockForm('${s.id}')"><i class="fa-solid fa-pen" style="font-size:11px;margin-right:4px"></i>Edit</button>
+        <button onclick="deleteStockItem('${s.id}')"><i class="fa-solid fa-trash" style="font-size:11px;margin-right:4px"></i>Delete</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function dateRange(period) {
+  const now = new Date();
+  const start = new Date(now);
+  const end = new Date(now);
+
+  if (period === "today") {
+    return {
+      start: dateString(now),
+      end: dateString(now)
+    };
+  }
+
+  if (period === "week") {
+    const day = now.getDay();
+    const diff = day === 0 ? 6 : day - 1;
+
+    start.setDate(now.getDate() - diff);
+
+    return {
+      start: dateString(start),
+      end: dateString(now)
+    };
+  }
+
+  if (period === "lastmonth") {
+    const first = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const last = new Date(now.getFullYear(), now.getMonth(), 0);
+
+    return {
+      start: dateString(first),
+      end: dateString(last)
+    };
+  }
+
+  return {
+    start: dateString(new Date(now.getFullYear(), now.getMonth(), 1)),
+    end: dateString(now)
+  };
+}
+
+function dateString(d) {
+  return d.toISOString().split("T")[0];
+}
+
+function inRange(date, range) {
+  return date >= range.start && date <= range.end;
+}
+
+function renderSalesHistory() {
+  const search = (document.getElementById("salesSearch")?.value || "")
+    .toLowerCase()
+    .trim();
+
+  const sales = [...db.sales]
+    .filter(s => {
+      const customer = customerById(s.customerId);
+      const name = customer ? customer.name.toLowerCase() : "";
+      return name.includes(search) || s.product.toLowerCase().includes(search);
+    })
+    .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+
+  const container = document.getElementById("salesHistoryList");
+
+  if (!sales.length) {
+    container.innerHTML = `<div class="empty">${db.sales.length ? "No matching sales." : "No sales recorded yet."}</div>`;
+    return;
+  }
+
+  container.innerHTML = sales.map(s => {
+    const customer = customerById(s.customerId);
+    const paid = salePaid(s.id);
+    const balance = saleBalance(s);
+    const status = saleStatus(s);
+
+    return `
+      <div class="expense-card">
+        <div class="customer-main">
+          <div>
+            <div class="customer-name">${escapeHTML(customer ? customer.name : "Unknown customer")}</div>
+            <div class="muted">${escapeHTML(s.product)}${s.quantity ? ` × ${s.quantity}` : ""} • ${s.date}</div>
+            <div class="muted">Paid ${money(paid)} of ${money(s.amount)}</div>
+          </div>
+          <div style="text-align:right">
+            <strong>${money(s.amount)}</strong>
+            <div><span class="status ${status}">${status.toUpperCase()}</span></div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button onclick="shareReceipt('${s.id}')"><i class="fa-solid fa-receipt" style="font-size:11px;margin-right:4px"></i>Receipt</button>
+          <button onclick="openEditSale('${s.id}')"><i class="fa-solid fa-pen" style="font-size:11px;margin-right:4px"></i>Edit</button>
+          <button onclick="deleteSale('${s.id}')"><i class="fa-solid fa-trash" style="font-size:11px;margin-right:4px"></i>Delete</button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function openEditSale(id) {
+  const sale = db.sales.find(s => s.id === id);
+  if (!sale) return;
+
+  const customer = customerById(sale.customerId);
+
+  document.getElementById("editSaleId").value = sale.id;
+  document.getElementById("editSaleSummary").textContent =
+    `${customer ? customer.name : "Unknown"} — ${sale.product}`;
+  document.getElementById("editSaleAmount").value = sale.amount;
+  document.getElementById("editSalePaid").value = salePaid(sale.id);
+  document.getElementById("editSaleDueDate").value = sale.dueDate || "";
+
+  document.getElementById("editSaleModal").classList.add("show");
+}
+
+function saveEditSale(e) {
+  e.preventDefault();
+
+  const id = document.getElementById("editSaleId").value;
+  const sale = db.sales.find(s => s.id === id);
+  if (!sale) return;
+
+  const amount = Number(document.getElementById("editSaleAmount").value);
+  const paid = Number(document.getElementById("editSalePaid").value);
+  const dueDate = document.getElementById("editSaleDueDate").value;
+
+  if (amount <= 0 || paid < 0 || paid > amount) {
+    showToast("Check the amounts entered");
+    return;
+  }
+
+  if (amount - paid > 0 && !dueDate) {
+    showToast("Enter a due date for the remaining balance");
+    return;
+  }
+
+  // Reconcile: keep it simple by clearing recorded payments beyond the
+  // original sale.amountPaid and re-deriving amountPaid to match "paid".
+  db.payments = db.payments.filter(p => p.saleId !== id);
+  sale.amount = amount;
+  sale.amountPaid = paid;
+  sale.dueDate = amount - paid > 0 ? dueDate : null;
+
+  saveDB();
+  closeModal("editSaleModal");
+
+  showToast("Sale updated");
+  renderSalesHistory();
+  renderDashboard();
+  renderCustomers();
+}
+
+function deleteSale(id) {
+  const sale = db.sales.find(s => s.id === id);
+  if (!sale) return;
+
+  const confirmed = window.confirm("Delete this sale? This cannot be undone.");
+  if (!confirmed) return;
+
+  if (sale.stockItemId) {
+    const item = stockById(sale.stockItemId);
+    if (item) item.quantity += Number(sale.quantity || 0);
+  }
+
+  db.sales = db.sales.filter(s => s.id !== id);
+  db.payments = db.payments.filter(p => p.saleId !== id);
+
+  saveDB();
+  showToast("Sale deleted");
+  renderSalesHistory();
+  renderDashboard();
+  renderCustomers();
+  renderStock();
+  populateSaleStockSelect();
+}
+
+function shareReceipt(id) {
+  const sale = db.sales.find(s => s.id === id);
+  if (!sale) return;
+
+  const customer = customerById(sale.customerId);
+  const paid = salePaid(sale.id);
+  const balance = saleBalance(sale);
+  const info = db.businessInfo || {};
+
+  const lines = [
+    info.name ? `${info.name}` : "Receipt",
+    "----------------------",
+    `Customer: ${customer ? customer.name : "N/A"}`,
+    `Item: ${sale.product}${sale.quantity ? ` × ${sale.quantity}` : ""}`,
+    `Date: ${sale.date}`,
+    `Amount: ${money(sale.amount)}`,
+    `Paid: ${money(paid)}`,
+    balance > 0 ? `Balance due: ${money(balance)}` : "Status: PAID IN FULL",
+    "----------------------",
+    "Thank you for your business!"
+  ];
+
+  if (info.phone) lines.push(info.phone);
+
+  const text = lines.join("\n");
+
+  if (navigator.share) {
+    navigator.share({ text }).catch(() => {});
+    return;
+  }
+
+  if (customer && customer.phone) {
+    const phone = digitsOnly(customer.phone);
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+    window.open(url, "_blank");
+  } else {
+    navigator.clipboard && navigator.clipboard.writeText(text);
+    showToast("Receipt copied to clipboard");
+  }
+}
+
+function renderReports() {
+  const period = document.getElementById("reportPeriod").value;
+  const range = dateRange(period);
+
+  const sales = db.sales.filter(s => inRange(s.date, range));
+  const expenses = db.expenses.filter(e => inRange(e.date, range));
+
+  const salesTotal =
+    sales.reduce((sum, s) => sum + Number(s.amount), 0);
+
+  const collected =
+    sales.reduce((sum, s) => sum + Number(s.amountPaid || 0), 0) +
+    db.payments
+      .filter(p => inRange(p.date, range))
+      .reduce((sum, p) => sum + Number(p.amount), 0);
+
+  const expenseTotal =
+    expenses.reduce((sum, e) => sum + Number(e.amount), 0);
+
+  const outstanding =
+    db.customers.reduce((sum, c) => sum + customerBalance(c.id), 0);
+
+  document.getElementById("reportSales").textContent = money(salesTotal);
+  document.getElementById("reportCollected").textContent = money(collected);
+  document.getElementById("reportOutstanding").textContent = money(outstanding);
+  document.getElementById("reportExpenses").textContent = money(expenseTotal);
+  document.getElementById("reportProfit").textContent =
+    money(collected - expenseTotal);
+
+  renderReportOwing();
+  renderExpenseCategories(expenses);
+}
+
+function renderReportOwing() {
+  const owing = db.customers
+    .map(c => ({
+      customer: c,
+      balance: customerBalance(c.id)
+    }))
+    .filter(x => x.balance > 0)
+    .sort((a, b) => b.balance - a.balance)
+    .slice(0, 10);
+
+  const container = document.getElementById("reportOwing");
+
+  if (!owing.length) {
+    container.innerHTML =
+      `<div class="empty">Nobody currently owes you.</div>`;
+    return;
+  }
+
+  container.innerHTML = owing.map(x => `
+    <div class="owing-row">
+      <div class="customer-main">
+        <span>${escapeHTML(x.customer.name)}</span>
+        <strong class="balance">${money(x.balance)}</strong>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderExpenseCategories(expenses) {
+  const totals = {};
+
+  expenses.forEach(e => {
+    totals[e.category] =
+      (totals[e.category] || 0) + Number(e.amount);
+  });
+
+  const values = Object.values(totals);
+  const max = values.length ? Math.max(...values) : 0;
+
+  const container = document.getElementById("expenseCategories");
+
+  if (!values.length) {
+    container.innerHTML =
+      `<div class="empty">No expenses for this period.</div>`;
+    return;
+  }
+
+  container.innerHTML = Object.entries(totals)
+    .sort((a, b) => b[1] - a[1])
+    .map(([category, amount]) => `
+      <div class="category-row">
+        <div class="category-label">
+          <span>${escapeHTML(category)}</span>
+          <strong>${money(amount)}</strong>
+        </div>
+        <div class="bar">
+          <div style="width:${max ? (amount / max) * 100 : 0}%"></div>
+        </div>
+      </div>
+    `).join("");
+}
+
+function openCustomerDetail(id) {
+  const c = customerById(id);
+
+  if (!c) return;
+
+  const balance = customerBalance(id);
+
+  const sales = db.sales
+    .filter(s => s.customerId === id)
+    .sort((a, b) => b.date.localeCompare(a.date));
+
+  let html = `
+    <div class="detail-header customer-info-row">
+      ${avatarHTML(c, true)}
+      <div>
+        <h2>${escapeHTML(c.name)}${c.onWhatsApp === false ? `<span class="no-whatsapp-tag">No WhatsApp</span>` : ""}</h2>
+        <p>${escapeHTML(c.phone || "No phone number")}</p>
+      </div>
+    </div>
+
+    <div class="detail-balance">
+      <span>Current Balance</span>
+      <strong>${money(balance)}</strong>
+    </div>
+
+    <div class="detail-actions">
+      ${balance > 0
+        ? `<button class="primary" onclick="openPaymentForCustomer('${id}')"><i class="fa-solid fa-hand-holding-dollar" style="font-size:12px;margin-right:4px"></i>Record Payment</button>
+           <button class="secondary" onclick="openCustomerForm('${id}')"><i class="fa-solid fa-pen" style="font-size:11px;margin-right:4px"></i>Edit Customer</button>`
+        : `<button class="secondary full" onclick="openCustomerForm('${id}')"><i class="fa-solid fa-pen" style="font-size:11px;margin-right:4px"></i>Edit Customer</button>`}
+    </div>
+
+    <div class="card-actions contact-actions">
+      <button onclick="callCustomer('${id}')">${ICON_CALL} Call</button>
+      <button onclick="smsCustomer('${id}')">${ICON_SMS} SMS</button>
+      <button class="${c.onWhatsApp === false ? 'whatsapp-off' : 'whatsapp'}" onclick="sendReminder('${id}')">${ICON_WHATSAPP} WhatsApp</button>
+    </div>
+
+    <div class="card-actions contact-actions">
+      <button class="thanks" onclick="sendThankYou('${id}')">🙏 Thank Customer</button>
+    </div>
+
+    <h3>Purchase History</h3>
+  `;
+
+  if (!sales.length) {
+    html += `<div class="empty">No purchases yet.</div>`;
+  } else {
+    html += sales.map(s => {
+      const paid = salePaid(s.id);
+      const bal = saleBalance(s);
+      const status = saleStatus(s);
+
+      return `
+        <div class="history-item">
+          <strong>${escapeHTML(s.product)}</strong>
+          <div class="muted">
+            ${s.date} • Sale ${money(s.amount)}
+          </div>
+          <div class="muted">
+            Paid: ${money(paid)} • Balance: ${money(bal)}
+          </div>
+          <span class="status ${status}">
+            ${status.toUpperCase()}
+          </span>
+        </div>
+      `;
+    }).join("");
+  }
+
+  document.getElementById("customerDetail").innerHTML = html;
+  document.getElementById("detailModal").classList.add("show");
+}
+
+function sendReminder(customerId) {
+  const c = customerById(customerId);
+  const balance = customerBalance(customerId);
+
+  if (!c) return;
+
+  if (!c.phone) {
+    showToast("Customer has no phone number");
+    return;
+  }
+
+  if (c.onWhatsApp === false) {
+    showToast("Not on WhatsApp — sending SMS instead");
+    smsCustomer(customerId);
+    return;
+  }
+
+  const message = (balance > 0
+    ? `Hi ${c.name}, this is a friendly reminder that your outstanding balance is ${money(balance)}. Please let me know when you are able to make the payment. Thank you.`
+    : `Hi ${c.name}, just checking in with you. Thanks for being a valued customer!`) + signatureLine();
+
+  const phone = digitsOnly(c.phone);
+
+  const url =
+    `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+  window.open(url, "_blank");
+}
+
+function sendThankYou(customerId) {
+  const c = customerById(customerId);
+
+  if (!c) return;
+
+  if (!c.phone) {
+    showToast("Customer has no phone number");
+    return;
+  }
+
+  const message = `Hi ${c.name}, thank you so much for your business — we really appreciate you choosing us. Looking forward to serving you again!` + signatureLine();
+
+  if (c.onWhatsApp === false) {
+    const phone = digitsOnly(c.phone);
+    window.location.href = `smsto:${phone}?body=${encodeURIComponent(message)}`;
+    showToast("Not on WhatsApp — sending SMS instead");
+    return;
+  }
+
+  const phone = digitsOnly(c.phone);
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+  window.open(url, "_blank");
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove("show");
+}
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2200);
+}
+
+function escapeHTML(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+/* Close modal when tapping outside */
+document.querySelectorAll(".modal").forEach(modal => {
+  modal.addEventListener("click", e => {
+    if (e.target === modal) {
+      modal.classList.remove("show");
+    }
+  });
+});
+
+/* Start application */
+document.getElementById("expenseDate").value = today();
+
+populateCustomerSelect();
+populateSaleStockSelect();
+renderDashboard();
+renderCustomers();
+renderExpenses();
+renderStock();
+renderReports();
+renderBrandLogo();
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("service-worker.js").catch(() => {});
+  });
+}
+</script>
+
+</body>
+</html>
